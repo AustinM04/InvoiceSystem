@@ -18,7 +18,7 @@ namespace InvoiceSystem.Search
 		/// <summary>
 		/// Interaction logic for wndSearch.xaml
 		/// </summary>
-		public partial class wndSearch : Page
+		public partial class wndSearch : Window
 		{
 				public wndSearch()
 				{
