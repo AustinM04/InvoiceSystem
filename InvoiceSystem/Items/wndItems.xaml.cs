@@ -18,11 +18,14 @@ namespace InvoiceSystem.Items
 		/// <summary>
 		/// Interaction logic for wndItems.xaml
 		/// </summary>
-		public partial class wndItems : Page
+		public partial class wndItems : Window
 		{
-				public wndItems()
-				{
-						InitializeComponent();
-				}
+			public wndItems()
+			{
+				InitializeComponent();
+			}
+   			//bool bHasItemsBeenChanged //Set to true when an item has been added/edited/deleted. Used by main window to see if list needs to be refeshed
+      			//bool HasItemsBeenChanged //Property
+    			
 		}
 }
