@@ -24,5 +24,30 @@ namespace InvoiceSystem.Search
 				{
 						InitializeComponent();
 				}
+
+				private void btnSelectInvoice_Click(object sender, RoutedEventArgs e)
+				{
+
+				}
+
+				private void btnClearFilter_Click(object sender, RoutedEventArgs e)
+				{
+
+				}
+
+				private void cbInvoiceNumber_SelectionChanged(object sender, SelectionChangedEventArgs e)
+				{
+
+				}
+
+				private void cbInvoiceDate_SelectionChanged(object sender, SelectionChangedEventArgs e)
+				{
+
+				}
+
+				private void cbInvoiceCost_SelectionChanged(object sender, SelectionChangedEventArgs e)
+				{
+
+				}
 		}
 }
