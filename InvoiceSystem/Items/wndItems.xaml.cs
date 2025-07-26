@@ -22,9 +22,11 @@ namespace InvoiceSystem.Items
 		{
   			//Create an instance for Items SQL Class
   			private Items.clsItemsSQL ItemsSql;
-     			
+     			//
      			public List<Main.clsItems> lstData;
-			
+			///<summary>
+   			///Constructor
+      			///</summary>
 			public wndItems()
 			{
    				try
