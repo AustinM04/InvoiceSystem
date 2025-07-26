@@ -20,9 +20,24 @@ namespace InvoiceSystem.Items
 		/// </summary>
 		public partial class wndItems : Window
 		{
+  			//Create an instance for Items SQL Class
+  			private Items.clsItemsSQL ItemsSql;
+     			
+     			public List<Main.clsItems> lstData;
+			
 			public wndItems()
 			{
-				InitializeComponent();
+   				try
+       				{
+	   				ItemsSql = new Items.clsItemsSQL();
+	   				InitializeComponent();
+				}
+    				catch (Exception ex)
+				{
+    					throw new Exception(System.Reflection.MethodInfo.GetCurrentMethod().DeclaringType.Name + 
+	 						"." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+				}
+				
 			}
    			//bool bHasItemsBeenChanged //Set to true when an item has been added/edited/deleted. Used by main window to see if list needs to be refeshed
       			//bool HasItemsBeenChanged //Property
