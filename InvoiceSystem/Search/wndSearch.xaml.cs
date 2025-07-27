@@ -39,6 +39,7 @@ namespace InvoiceSystem.Search
 						searchLogic = new clsSearchLogic();
 						resetComboBoxes();
 						resetDataGrid();
+						this.Closing += wndSearch_Closing;
 				}
 
 
@@ -67,7 +68,7 @@ namespace InvoiceSystem.Search
 										sSelectedInvoiceID = "0"; // No invoice selected
 								}
 								// Uncomment this when the search window is used in the main window
-								//this.Hide(); 
+								this.Hide(); 
 						}
 						catch (Exception ex)
 						{
@@ -203,6 +204,17 @@ namespace InvoiceSystem.Search
 								System.IO.File.AppendAllText("C:\\Error.txt", Environment.NewLine +
 																						 "HandleError Exception: " + ex.Message);
 						}
+				}
+
+				/// <summary>
+				/// This is used to avoid actually closing the window to maintain the session
+				/// </summary>
+				/// <param name="sender"></param>
+				/// <param name="e"></param>
+				private void wndSearch_Closing(object? sender, System.ComponentModel.CancelEventArgs e)
+				{
+						e.Cancel = true; // Cancel the close
+						this.Hide();     // Hide the window instead
 				}
 
 

@@ -21,13 +21,13 @@ namespace InvoiceSystem.Items
 		public wndItems()
 		{
 			try
-       			{
-	   			InitializeComponent();
+      {
+	   		InitializeComponent();
 				itemsLogic = new clsItemsLogic();
 				resetDataGrid();
 				resetLabels();
 			}
-    			catch (Exception ex)
+    	catch (Exception ex)
 			{
    				//Throws Exception
     				throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + 

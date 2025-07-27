@@ -18,13 +18,15 @@ namespace InvoiceSystem
     /// </summary>
     public partial class wndMain : Window
     {
-        /// <summary>
-        /// Initializes the Main Window
-        /// </summary>
-        public wndMain()
+				wndSearch newSearch;
+				/// <summary>
+				/// Initializes the Main Window
+				/// </summary>
+				public wndMain()
         {
             InitializeComponent();
-        }
+            newSearch = new wndSearch();
+				}
         /// <summary>
         /// On-Click event for Search Button
         /// </summary>
@@ -33,8 +35,8 @@ namespace InvoiceSystem
         private void btnSearch_Click(object sender, RoutedEventArgs e)
         {
             this.Hide();
-            wndSearch newSearch = new wndSearch();
             newSearch.ShowDialog();
+            this.Show();
         }
         /// <summary>
         /// On-Click event for Edit Items Button
@@ -46,6 +48,7 @@ namespace InvoiceSystem
             this.Hide();
             wndItems newItems = new wndItems();
             newItems.ShowDialog();
+            this.Show();
         }
         /// <summary>
         /// On-Click event for Edit Invoice Button
