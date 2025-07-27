@@ -62,6 +62,10 @@ namespace InvoiceSystem.Search
 												sSelectedInvoiceID = selectedInvoice.sInvoiceNum;
 										}
 								}
+								else 
+								{
+										sSelectedInvoiceID = "0"; // No invoice selected
+								}
 								// Uncomment this when the search window is used in the main window
 								//this.Hide(); 
 						}
