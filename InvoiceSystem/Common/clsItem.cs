@@ -11,7 +11,7 @@ namespace InvoiceSystem.Common
 		/// <summary>
 		/// Item Code
 		/// </summary>
-		public int iItemCode { get; set; }
+		public string sItemCode { get; set; }
 		/// <summary>
 		/// Item Description
 		/// </summary>
@@ -19,6 +19,6 @@ namespace InvoiceSystem.Common
 		/// <summary>
 		/// Item Cost
 		/// </summary>
-		public decimal dCost { get; set; }
+		public string sCost { get; set; }
 	}
 }
