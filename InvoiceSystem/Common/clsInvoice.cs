@@ -9,12 +9,5 @@ namespace InvoiceSystem.Common
 	internal class clsInvoice
 	{
 		//Invoice Number
-		int InvoiceID;
-		//InvoiceDate
-		string InvoiceDate;
-		//Total cost
-		decimal InvoiceAmount;
-		//List<clsItem> Items
-		List<clsItem> Items;
 	}
 }

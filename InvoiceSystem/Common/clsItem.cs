@@ -9,10 +9,7 @@ namespace InvoiceSystem.Common
 	internal class clsItem
 	{
 		//Code
-		char ItemCode;
-		//Description
-		string ItemDesc;
-		//Cost
-		decimal ItemCost;
+			/// <summary>
+			/// Item Code
 	}
 }
