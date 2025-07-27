@@ -5,132 +5,139 @@ using System.Windows;
 
 namespace InvoiceSystem.Items
 {
-		/// <summary>
-		/// Interaction logic for wndItems.xaml
-		/// </summary>
-		public partial class wndItems : Window
+	/// <summary>
+	/// Interaction logic for wndItems.xaml
+	/// </summary>
+	public partial class wndItems : Window
+	{
+		//Create an instance for Items SQL Class
+		private clsItemsLogic itemsLogic;
+		private List<clsItem> clsItems;
+		clsItem selectedItem;
+		private bool bHasItemsBeenChanged = false; //Set to true when an item has been added/edited/deleted. Used by main window to see if list needs to be refeshed
+		///<summary>
+		///Constructor
+		///</summary>
+		public wndItems()
 		{
-				//Create an instance for Items SQL Class
-				private clsItemsLogic itemsLogic;
-				private List<clsItem> clsItems;
-				clsItem selectedItem;
-				private bool bHasItemsBeenChanged = false; //Set to true when an item has been added/edited/deleted. Used by main window to see if list needs to be refeshed
-				///<summary>
-				///Constructor
-				///</summary>
-				public wndItems()
-				{
-   					try
+			try
        			{
-	   						InitializeComponent();
-								itemsLogic = new clsItemsLogic();
-								resetDataGrid();
-								resetLabels();
-						}
-    				catch (Exception ex)
-						{
-    						throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + 
-	 							"." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
-						}
+	   			InitializeComponent();
+				itemsLogic = new clsItemsLogic();
+				resetDataGrid();
+				resetLabels();
+			}
+    			catch (Exception ex)
+			{
+   				//Throws Exception
+    				throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + 
+	 						"." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+			}
 				
-				}
-   			//bool bHasItemsBeenChanged //Set to true when an item has been added/edited/deleted. Used by main window to see if list needs to be refeshed
-      	//bool HasItemsBeenChanged //Property
-      	public bool HasItemsBeenChanged
-      	{
-      		get { return bHasItemsBeenChanged; }
-      	}
+		}
+   			
+      		//bool HasItemsBeenChanged //Property
+      		public bool HasItemsBeenChanged
+      		{
+      			get { return bHasItemsBeenChanged; }
+      		}
 
-				/// <summary>
-				/// Method to reset the data grid with items from the database
-				/// </summary>
-				/// <exception cref="Exception"></exception>
-				private void resetDataGrid()
-				{
-						try
-						{
-								dgItems.ItemsSource = itemsLogic.GetItems();
-						}
-						catch (Exception ex)
-						{
-								throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
-						}
-				}
+		/// <summary>
+		/// Method to reset the data grid with items from the database
+		/// </summary>
+		/// <exception cref="Exception"></exception>
+		private void resetDataGrid()
+		{
+			try
+			{
+				dgItems.ItemsSource = itemsLogic.GetItems();
+			}
+			catch (Exception ex)
+			{
+   				//Throws Exeception
+				throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+			}
+		}
 
-				/// <summary>
-				/// Method to reset the data grid
-				/// </summary>
-				private void resetLabels()
-				{
-						try
-						{
-								lblCode.Content = "";
-								lblDescription.Content = "";
-								lblCost.Content = "";
-						}
-						catch (Exception ex)
-						{
-								HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name,
-														MethodInfo.GetCurrentMethod().Name, ex.Message);
-						}
-				}
+		/// <summary>
+		/// Method to reset the data grid
+		/// </summary>
+		private void resetLabels()
+		{
+			try
+			{
+				lblCode.Content = "";
+				lblDescription.Content = "";
+				lblCost.Content = "";
+			}
+			catch (Exception ex)
+			{
+   				//Calls HandleError Method for exception
+				HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name,
+						MethodInfo.GetCurrentMethod().Name, ex.Message);
+			}
+		}
 
-				/// <summary>
-				/// Method to handle the click event of the Add Item button
-				/// </summary>
-				/// <param name="sender"></param>
-				/// <param name="e"></param>
-				private void btnAddItem_Click(object sender, RoutedEventArgs e)
-				{
-						try
-						{
-								bHasItemsBeenChanged = true;
+		/// <summary>
+		/// Method to handle the click event of the Add Item button
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void btnAddItem_Click(object sender, RoutedEventArgs e)
+		{
+			try
+			{
+   				//Changes bHasItemsBeenChanged status to True
+				bHasItemsBeenChanged = true;
 
-						}
-						catch (Exception ex)
-						{
-								HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name,
-														MethodInfo.GetCurrentMethod().Name, ex.Message);
-						}
-				}
+			}
+			catch (Exception ex)
+			{
+   				//Calls HandleError Method for exception
+				HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name,
+					MethodInfo.GetCurrentMethod().Name, ex.Message);
+			}
+		}
 
-				/// <summary>
-				/// Method to handle the click event of the Add Item button
-				/// </summary>
-				/// <param name="sender"></param>
-				/// <param name="e"></param>
-				private void btnEdit_Click(object sender, RoutedEventArgs e)
-				{
-						try
-						{
-								bHasItemsBeenChanged = true;
+		/// <summary>
+		/// Method to handle the click event of the Add Item button
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void btnEdit_Click(object sender, RoutedEventArgs e)
+		{
+			try
+			{
+   				//Changes bHasItemsBeenChanged status to True
+				bHasItemsBeenChanged = true;
 
-						}
-						catch (Exception ex)
-						{
-								HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name,
-														MethodInfo.GetCurrentMethod().Name, ex.Message);
-						}
-				}
+			}
+			catch (Exception ex)
+			{
+				HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name,
+					MethodInfo.GetCurrentMethod().Name, ex.Message);
+			}
+		}
 
-				/// <summary>
-				/// 
-				/// </summary>
-				/// <param name="sender"></param>
-				/// <param name="e"></param>
-				private void btnDelete_Click(object sender, RoutedEventArgs e)
-				{
-						try
-						{
-								bHasItemsBeenChanged = true;
+		/// <summary>
+		/// Method when the Delete Button is pressed
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void btnDelete_Click(object sender, RoutedEventArgs e)
+		{
+			try
+			{
+   				//Changes bHasItemsBeenChanged status to True
+				bHasItemsBeenChanged = true;
 
-						}
-						catch (Exception ex)
-						{
-								HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name,
-														MethodInfo.GetCurrentMethod().Name, ex.Message);
-						}
-				}
+			}
+			catch (Exception ex)
+			{
+				HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name,
+						MethodInfo.GetCurrentMethod().Name, ex.Message);
+			}
+		}
 
 
 				#region try-catch block copy paste
@@ -205,5 +212,5 @@ namespace InvoiceSystem.Items
 														MethodInfo.GetCurrentMethod().Name, ex.Message);
 						}
 				}
-		}
+	}
 }
