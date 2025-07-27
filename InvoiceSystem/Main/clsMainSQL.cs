@@ -1,6 +1,9 @@
 ﻿using InvoiceSystem.Common;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.OleDb;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -14,6 +17,57 @@ namespace InvoiceSystem
     /// </summary>
     internal class clsMainSQL
     {
+        /// <summary>
+        /// Connection string to connect to database
+        /// </summary>
+        private string sConnectionString;
+        /// <summary>
+        /// Constructor that sets the connection string to the database
+        /// </summary>
+        public clsMainSQL()
+        {
+            try
+            {
+                sConnectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + Directory.GetCurrentDirectory() + "\\Invoice.accdb";
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
+        }
+        /// <summary>
+        /// This method takes an SQL statement that is passed in and executes it.  The resulting values
+        /// are returned in a DataSet.  The number of rows returned from the query will be put into
+        /// the reference parameter iRetVal.
+        /// </summary>
+        /// <param name="sSQL">The SQL statement to be executed.</param>
+        /// <param name="iRetVal">Reference parameter that returns the number of selected rows.</param>
+        /// <returns>Returns a DataSet that contains the data from the SQL statement.</returns>
+        public DataSet ExecuteSQLStatement(string sSQL, ref int iRetVal)
+        {
+            try
+            {
+                DataSet ds = new DataSet();
+
+                using (OleDbConnection conn = new OleDbConnection(sConnectionString))
+                {
+                    using (OleDbDataAdapter adapter = new OleDbDataAdapter())
+                    {
+                        conn.Open();
+                        adapter.SelectCommand = new OleDbCommand(sSQL, conn);
+                        adapter.SelectCommand.CommandTimeout = 0;
+
+                        adapter.Fill(ds);
+                    }
+                }
+                iRetVal = ds.Tables[0].Rows.Count;
+                return ds;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
+        }
         /// <summary>
         /// Updates the Invoices in the database when executed
         /// </summary>

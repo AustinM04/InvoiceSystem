@@ -5,31 +5,33 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:InvoiceSystem"
         mc:Ignorable="d"
-        Title="MainWindow" Height="340" Width="630">
-    <Canvas Margin="0,0,0,0">
-        <Menu x:Name="mSearch" Canvas.Left="0" HorizontalAlignment="Left" VerticalAlignment="Center" Canvas.Top="0" Width="630">
-            <Button x:Name="btnSearch" Content="Search" Height="30" Width="90" Padding="0,0,0,0" HorizontalAlignment="Left" Click="btnSearch_Click"/>
-            <Button x:Name="btnItems" Content="Edit Items" Height="30" Width="90" HorizontalContentAlignment="Center" Padding="0,0,0,0" Click="btnItems_Click"/>
-        </Menu>
-        <Button x:Name="btnEditInvoice" Content="Edit Invoice" Canvas.Left="10" Canvas.Top="77" Click="btnEditInvoice_Click"/>
-        <Button x:Name="btnSaveInvoice" Content="Save Invoice" Canvas.Left="100" Canvas.Top="77" Click="btnSaveInvoice_Click"/>
-        <StackPanel x:Name="spInvoiceData" Canvas.Left="23" Canvas.Top="131" HorizontalAlignment="Left" Height="78" VerticalAlignment="Center" Width="211">
-            <Label x:Name="lblInvoiceDate" Content="Invoice Date:" Canvas.Left="75" Canvas.Top="148"/>
-            <Label x:Name="lblInvoiceNumber" Content="Invoice Number:" Canvas.Left="100" Canvas.Top="217"/>
-            <Label x:Name="lblTotalCost" Content="Total Cost:" Canvas.Left="100" Canvas.Top="286"/>
-        </StackPanel>
-        <StackPanel x:Name="spItemData" Height="89" Width="209" Canvas.Left="23" Canvas.Top="214" HorizontalAlignment="Center" VerticalAlignment="Top">
-            <StackPanel Orientation="Horizontal">
-                <Label x:Name="lblItems" Content="Items:" Canvas.Left="97" Canvas.Top="240"/>
-                <ComboBox x:Name="cboItems" Canvas.Left="144" Canvas.Top="244" Width="120" SelectionChanged="cboItems_SelectionChanged"/>
+        Title="MainWindow" Height="450" Width="800" ResizeMode="CanMinimize">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="300*"/>
+            <ColumnDefinition Width="500*"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel x:Name="spInvoiceData">
+            <Menu x:Name="mSearch">
+                <MenuItem x:Name="miSearch" Header="Search for Invoice" UseLayoutRounding="True" FontSize="20" Click="btnSearch_Click"/>
+                <MenuItem x:Name="miItems" Header="Items" FontSize="20" Click="btnItems_Click"/>
+            </Menu>
+            <Label x:Name="lblInvoiceDate" Content="Invoice Date:" Canvas.Left="75" Canvas.Top="148" FontSize="16"/>
+            <Label x:Name="lblInvoiceNumber" Content="Invoice Number:" Canvas.Left="100" Canvas.Top="217" FontSize="16"/>
+            <Label x:Name="lblTotalCost" Content="Total Cost:" Canvas.Left="100" Canvas.Top="286" FontSize="16"/>
+            <StackPanel x:Name="spItems" Orientation="Horizontal">
+                <Label x:Name="lblItems" Content="Items:" Canvas.Left="97" Canvas.Top="240" FontSize="16"/>
+                <ComboBox x:Name="cboItems" FontSize="16" Width="218" Height="25" SelectionChanged="cboItems_SelectionChanged"/>
             </StackPanel>
-            <Label x:Name="lblCost" Content="Cost:" Canvas.Left="118" Canvas.Top="301"/>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <Button x:Name="btnAddItem" Content="Add Item" Canvas.Left="177" Canvas.Top="150" Click="btnAddItem_Click"/>
-                <Button x:Name="btnRemoveItem" Content="Remove Item" Canvas.Left="271" Canvas.Top="160" Margin="20,0,0,0" Click="btnRemoveItem_Click"/>
+            <Label x:Name="lblCost" Content="Cost:" Canvas.Left="118" Canvas.Top="301" FontSize="16"/>
+            <StackPanel x:Name="spAddRemove" Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button x:Name="btnAddItem" Content="Add Item" Canvas.Left="177" Canvas.Top="150" FontSize="16" Click="btnAddItem_Click"/>
+                <Button x:Name="btnRemoveItem" Content="Remove Item" Canvas.Left="271" Canvas.Top="160" Margin="20,0,0,0" FontSize="16" Click="btnRemoveItem_Click"/>
             </StackPanel>
+            <Button x:Name="btnEditInvoice" Content="Edit Invoice" FontSize="16" Margin="0,20,0,0" Click="btnEditInvoice_Click"/>
+            <Button x:Name="btnSaveInvoice" Content="Save Invoice" FontSize="16" Margin="0,20,0,0" Click="btnSaveInvoice_Click"/>
         </StackPanel>
-        <Label x:Name="lblItemsOnInvoice" Content="Items on the Invoice:" Canvas.Left="246" Canvas.Top="37"/>
-        <DataGrid x:Name="dgItems" Height="235" Width="368" d:ItemsSource="{d:SampleData ItemCount=6}" Canvas.Left="246" Canvas.Top="68" HorizontalAlignment="Center" VerticalAlignment="Top" SelectionChanged="DataGrid_SelectionChanged"/>
-    </Canvas>
+        <Label x:Name="lblItemsOnInvoice" Content="Items on Invoice:" Grid.Column="1" Margin="21,30,344,367" FontSize="16"/>
+        <DataGrid x:Name="gItems" d:ItemsSource="{d:SampleData ItemCount=6}" Grid.Column="1" FontSize="16" Margin="21,100,21,99"/>
+    </Grid>
 </Window>

@@ -1,4 +1,6 @@
-﻿using System.Text;
+﻿using InvoiceSystem.Items;
+using InvoiceSystem.Search;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -30,7 +32,9 @@ namespace InvoiceSystem
         /// <param name="e"></param>
         private void btnSearch_Click(object sender, RoutedEventArgs e)
         {
-
+            this.Hide();
+            wndSearch newSearch = new wndSearch();
+            newSearch.ShowDialog();
         }
         /// <summary>
         /// On-Click event for Edit Items Button
@@ -39,7 +43,9 @@ namespace InvoiceSystem
         /// <param name="e"></param>
         private void btnItems_Click(object sender, RoutedEventArgs e)
         {
-
+            this.Hide();
+            wndItems newItems = new wndItems();
+            newItems.ShowDialog();
         }
         /// <summary>
         /// On-Click event for Edit Invoice Button
