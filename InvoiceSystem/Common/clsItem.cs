@@ -8,8 +8,17 @@ namespace InvoiceSystem.Common
 {
 	internal class clsItem
 	{
-		//Code
-			/// <summary>
-			/// Item Code
+		/// <summary>
+		/// Item Code
+		/// </summary>
+		public int iItemCode { get; set; }
+		/// <summary>
+		/// Item Description
+		/// </summary>
+		public string sDescription { get; set; }
+		/// <summary>
+		/// Item Cost
+		/// </summary>
+		public decimal dCost { get; set; }
 	}
 }

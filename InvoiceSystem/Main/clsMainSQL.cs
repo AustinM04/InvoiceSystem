@@ -7,10 +7,20 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls.Primitives;
 
-namespace InvoiceSystem.Main
+namespace InvoiceSystem
 {
+    /// <summary>
+    /// Class for SQL statements in the Main Window
+    /// </summary>
     internal class clsMainSQL
     {
+        /// <summary>
+        /// Updates the Invoices in the database when executed
+        /// </summary>
+        /// <param name="InvoiceNum"></param>
+        /// <param name="NewCost"></param>
+        /// <returns>SQL Statement</returns>
+        /// <exception cref="Exception"></exception>
         public static string UpdateInvoice(int InvoiceNum, int NewCost)
         {
             try { return "UPDATE Invoices SET TotalCost = " + NewCost + " WHERE InvoiceNum = " + InvoiceNum; }
@@ -20,6 +30,14 @@ namespace InvoiceSystem.Main
                     MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
             }
         }
+        /// <summary>
+        /// Inserts the Item into the database when executed
+        /// </summary>
+        /// <param name="InvoiceNum"></param>
+        /// <param name="LineItemNum"></param>
+        /// <param name="ItemCode"></param>
+        /// <returns>SQL Statement</returns>
+        /// <exception cref="Exception"></exception>
         public static string InsertItem(int InvoiceNum, int LineItemNum, char ItemCode)
         {
             try 
@@ -30,6 +48,13 @@ namespace InvoiceSystem.Main
                     MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
             }
         }
+        /// <summary>
+        /// Inserts a new Invoice into the database when executed
+        /// </summary>
+        /// <param name="InvoiceDate"></param>
+        /// <param name="TotalCost"></param>
+        /// <returns>SQL Statement</returns>
+        /// <exception cref="Exception"></exception>
         public static string InsertInvoice(string InvoiceDate, int TotalCost)
         {
             try
@@ -40,6 +65,12 @@ namespace InvoiceSystem.Main
                     MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
             }
         }
+        /// <summary>
+        /// Selects a specific invoice in the database when executed
+        /// </summary>
+        /// <param name="InvoiceNum"></param>
+        /// <returns>SQL Statement</returns>
+        /// <exception cref="Exception"></exception>
         public static string ReturnInvoice(int InvoiceNum)
         {
             try { return "SELECT InvoiceNum, InvoiceDate, TotalCost FROM Invoices WHERE InvoiceNum = " + InvoiceNum; }
@@ -49,6 +80,11 @@ namespace InvoiceSystem.Main
                     MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
             }
         }
+        /// <summary>
+        /// Selects all Items in the database when executed
+        /// </summary>
+        /// <returns>SQL Statement</returns>
+        /// <exception cref="Exception"></exception>
         public static string ReturnItems()
         {
             try { return "SELECT ItemCode, ItemDesc, Cost FROM ItemDesc"; }
@@ -58,6 +94,12 @@ namespace InvoiceSystem.Main
                     MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
             }
         }
+        /// <summary>
+        /// Selects all items from a specific Invoice from the database when executed
+        /// </summary>
+        /// <param name="InvoiceNum"></param>
+        /// <returns>SQL Statement</returns>
+        /// <exception cref="Exception"></exception>
         public static string ReturnLineItems(int InvoiceNum)
         {
             try
@@ -72,6 +114,12 @@ namespace InvoiceSystem.Main
                     MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
             }
         }
+        /// <summary>
+        /// Deletes items from an Invoice in the database when executed
+        /// </summary>
+        /// <param name="InvoiceNum"></param>
+        /// <returns>SQL Statement</returns>
+        /// <exception cref="Exception"></exception>
         public static string DeleteItems(int InvoiceNum)
         {
             try { return "DELETE FROM LineItems WHERE InvoiceNum = " + InvoiceNum; }

@@ -8,11 +8,11 @@
         Title="MainWindow" Height="340" Width="630">
     <Canvas Margin="0,0,0,0">
         <Menu x:Name="mSearch" Canvas.Left="0" HorizontalAlignment="Left" VerticalAlignment="Center" Canvas.Top="0" Width="630">
-            <Button x:Name="btnSearch" Content="Search" Height="30" Width="90" Padding="0,0,0,0" HorizontalAlignment="Left"/>
-            <Button x:Name="btnItems" Content="Edit Items" Height="30" Width="90" HorizontalContentAlignment="Center" Padding="0,0,0,0"/>
+            <Button x:Name="btnSearch" Content="Search" Height="30" Width="90" Padding="0,0,0,0" HorizontalAlignment="Left" Click="btnSearch_Click"/>
+            <Button x:Name="btnItems" Content="Edit Items" Height="30" Width="90" HorizontalContentAlignment="Center" Padding="0,0,0,0" Click="btnItems_Click"/>
         </Menu>
-        <Button x:Name="btnEditInvoice" Content="Edit Invoice" Canvas.Left="10" Canvas.Top="77"/>
-        <Button x:Name="btnSaveInvoice" Content="Save Invoice" Canvas.Left="100" Canvas.Top="77"/>
+        <Button x:Name="btnEditInvoice" Content="Edit Invoice" Canvas.Left="10" Canvas.Top="77" Click="btnEditInvoice_Click"/>
+        <Button x:Name="btnSaveInvoice" Content="Save Invoice" Canvas.Left="100" Canvas.Top="77" Click="btnSaveInvoice_Click"/>
         <StackPanel x:Name="spInvoiceData" Canvas.Left="23" Canvas.Top="131" HorizontalAlignment="Left" Height="78" VerticalAlignment="Center" Width="211">
             <Label x:Name="lblInvoiceDate" Content="Invoice Date:" Canvas.Left="75" Canvas.Top="148"/>
             <Label x:Name="lblInvoiceNumber" Content="Invoice Number:" Canvas.Left="100" Canvas.Top="217"/>
@@ -21,15 +21,15 @@
         <StackPanel x:Name="spItemData" Height="89" Width="209" Canvas.Left="23" Canvas.Top="214" HorizontalAlignment="Center" VerticalAlignment="Top">
             <StackPanel Orientation="Horizontal">
                 <Label x:Name="lblItems" Content="Items:" Canvas.Left="97" Canvas.Top="240"/>
-                <ComboBox Canvas.Left="144" Canvas.Top="244" Width="120"/>
+                <ComboBox x:Name="cboItems" Canvas.Left="144" Canvas.Top="244" Width="120" SelectionChanged="cboItems_SelectionChanged"/>
             </StackPanel>
             <Label x:Name="lblCost" Content="Cost:" Canvas.Left="118" Canvas.Top="301"/>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <Button x:Name="btnAddItem" Content="Add Item" Canvas.Left="177" Canvas.Top="150"/>
-                <Button x:Name="btnRemoveItem" Content="Remove Item" Canvas.Left="271" Canvas.Top="160" Margin="20,0,0,0"/>
+                <Button x:Name="btnAddItem" Content="Add Item" Canvas.Left="177" Canvas.Top="150" Click="btnAddItem_Click"/>
+                <Button x:Name="btnRemoveItem" Content="Remove Item" Canvas.Left="271" Canvas.Top="160" Margin="20,0,0,0" Click="btnRemoveItem_Click"/>
             </StackPanel>
         </StackPanel>
         <Label x:Name="lblItemsOnInvoice" Content="Items on the Invoice:" Canvas.Left="246" Canvas.Top="37"/>
-        <DataGrid Height="235" Width="368" d:ItemsSource="{d:SampleData ItemCount=6}" Canvas.Left="246" Canvas.Top="68" HorizontalAlignment="Center" VerticalAlignment="Top" SelectionChanged="DataGrid_SelectionChanged"/>
+        <DataGrid x:Name="dgItems" Height="235" Width="368" d:ItemsSource="{d:SampleData ItemCount=6}" Canvas.Left="246" Canvas.Top="68" HorizontalAlignment="Center" VerticalAlignment="Top" SelectionChanged="DataGrid_SelectionChanged"/>
     </Canvas>
 </Window>
