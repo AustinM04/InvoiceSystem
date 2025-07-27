@@ -6,11 +6,15 @@ using System.Threading.Tasks;
 
 namespace InvoiceSystem.Common
 {
-		internal class clsInvoice
-		{
-				//Invoice Number
-				//Invoice date
-				//Total cost
-				//List<clsItem> Items
-		}
+	internal class clsInvoice
+	{
+		//Invoice Number
+		int InvoiceID;
+		//InvoiceDate
+		string InvoiceDate;
+		//Total cost
+		decimal InvoiceAmount;
+		//List<clsItem> Items
+		List<clsItem> Items;
+	}
 }

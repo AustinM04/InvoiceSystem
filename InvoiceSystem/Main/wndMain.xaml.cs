@@ -46,6 +46,8 @@ namespace InvoiceSystem
 
 
 
+
         // After search window is closed, check property SelectedInvoiceID in the search window to see if an invoice is selected. If so load the invoice
+        // After Items window is closed, check property HasBeenChanged in the Items window to see if any items were updated. If so re-load items in combo box
     }
 }
