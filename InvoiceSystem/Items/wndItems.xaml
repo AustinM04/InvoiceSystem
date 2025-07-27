@@ -5,16 +5,36 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:InvoiceSystem.Items"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
-      Title="wndItems">
+      Height="450" Width="800"
+      Title="wndItems"
+			ResizeMode="CanMinimize" Loaded="Window_Loaded">
 
-    <Grid>
-        <Label Content="Code:" HorizontalAlignment="Left" Margin="23,31,0,0" VerticalAlignment="Top"/>
-        <Label Content="Cost:" HorizontalAlignment="Left" Margin="23,72,0,0" VerticalAlignment="Top"/>
-        <Label Content="Description:" HorizontalAlignment="Left" Margin="23,112,0,0" VerticalAlignment="Top"/>
-        <Button Content="Add Item" HorizontalAlignment="Left" Margin="33,217,0,0" VerticalAlignment="Top"/>
-        <Button Content="Edit Item" HorizontalAlignment="Left" Margin="116,217,0,0" VerticalAlignment="Top"/>
-        <Button Content="Delete Item" HorizontalAlignment="Left" Margin="205,217,0,0" VerticalAlignment="Top"/>
-
-    </Grid>
+		<Grid>
+				<Grid.RowDefinitions>
+						<RowDefinition Height="75*"/>
+						<RowDefinition Height="297*"/>
+						<RowDefinition Height="62*"/>
+				</Grid.RowDefinitions>
+				<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="3*"/>
+						<ColumnDefinition Width="5*"/>
+				</Grid.ColumnDefinitions>
+				<Label Content="Code:" HorizontalAlignment="Left" Margin="23,41,0,0" VerticalAlignment="Top" Height="26" Width="40" Grid.Row="1"/>
+				<Label Content="Cost:" HorizontalAlignment="Left" Margin="23,82,0,0" VerticalAlignment="Top" Height="26" Width="36" Grid.Row="1"/>
+				<Label Content="Description:" HorizontalAlignment="Left" Margin="23,124,0,0" VerticalAlignment="Top" Height="26" Width="73" Grid.Row="1"/>
+				<Button x:Name="btnAddItem" Content="Add Item" HorizontalAlignment="Left" Margin="60,207,0,0" VerticalAlignment="Top" Height="20" Width="88" Grid.Row="1" Click="btnAddItem_Click"/>
+				<Button x:Name="btnEdit" Content="Edit Item" HorizontalAlignment="Left" Margin="152,207,0,0" VerticalAlignment="Top" Height="20" Width="88" Grid.Row="1" Click="btnEdit_Click"/>
+				<Button x:Name="btnDelete" Content="Delete Item" HorizontalAlignment="Center" Margin="0,232,0,0" VerticalAlignment="Top" Height="20" Width="180" Grid.Row="1" Click="btnDelete_Click"/>
+				<Label x:Name="lblCode" Content="" HorizontalAlignment="Left" Margin="63,41,0,0" VerticalAlignment="Top" Height="26" Width="40" Grid.Row="1"/>
+				<Label x:Name="lblCost" Content="" HorizontalAlignment="Left" Margin="63,82,0,0" VerticalAlignment="Top" Height="26" Width="36" Grid.Row="1"/>
+				<Label x:Name="lblDescription" Content="&#xD;&#xA;" HorizontalAlignment="Left" Margin="96,126,0,0" VerticalAlignment="Top" Height="65" Width="186" Grid.Row="1"/>
+				<Label Content="Items" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" Height="55" Width="264" FontSize="36"/>
+				<DataGrid x:Name="dgItems" Grid.Column="1" SelectionMode="Single" AutoGenerateColumns="False" Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}" CanUserAddRows="False" SelectionChanged="dgItems_SelectionChanged">
+						<DataGrid.Columns>
+								<DataGridTextColumn Header="Item Code" Binding="{Binding Path=sItemCode}"></DataGridTextColumn>
+								<DataGridTextColumn Header="Description" Binding="{Binding Path=sDescription}"></DataGridTextColumn>
+								<DataGridTextColumn Header="Cost" Binding="{Binding Path=sCost}"></DataGridTextColumn>
+						</DataGrid.Columns>
+				</DataGrid>
+		</Grid>
 </Window>

@@ -11,14 +11,14 @@ namespace InvoiceSystem.Common
 				/// <summary>
 				/// Item Code
 				/// </summary>
-				public int ItemCode { get; set; }
+				public string sItemCode { get; set; }
 				/// <summary>
 				/// Item Description
 				/// </summary>
-				public string Description { get; set; }
+				public string sDescription { get; set; }
 				/// <summary>
 				/// Item Cost
 				/// </summary>
-				public decimal Cost { get; set; }
+				public string sCost { get; set; }
 		}
 }
