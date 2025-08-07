@@ -25,7 +25,8 @@ namespace InvoiceSystem
 				public wndMain()
         {
             InitializeComponent();
-            newSearch = new wndSearch();
+						Application.Current.ShutdownMode = ShutdownMode.OnMainWindowClose;
+						newSearch = new wndSearch();
 				}
         /// <summary>
         /// On-Click event for Search Button
