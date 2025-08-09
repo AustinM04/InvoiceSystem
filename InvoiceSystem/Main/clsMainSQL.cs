@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace InvoiceSystem
+namespace InvoiceSystem.Main
 {
     /// <summary>
     /// Class for SQL statements in the Main Window

@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace InvoiceSystem
+namespace InvoiceSystem.Common
 {
 	public class clsInvoice
 	{
@@ -16,7 +16,13 @@ namespace InvoiceSystem
 		/// Total cost
 		/// </summary>
 		public string sTotalCost { get; set; }
-
+        /// <summary>
+        /// Constructor for clsInvoice
+        /// </summary>
+        /// <param name="num"></param>
+        /// <param name="date"></param>
+        /// <param name="cost"></param>
+        /// <exception cref="Exception"></exception>
         public clsInvoice(string num, string date, string cost)
         {
             try

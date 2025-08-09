@@ -1,20 +1,23 @@
 ﻿using InvoiceSystem;
 using System;
 using System.Windows;
+using InvoiceSystem.Common;
+using InvoiceSystem.Search;
+using InvoiceSystem.Items;
 using System.Reflection;
 using System.Windows.Controls;
 using System.Collections.Generic;
 using System.Data;
 
-namespace InvoiceSystem
+namespace InvoiceSystem.Main
 {
     /// <summary>
-    /// 
+    /// Class for containing the database connection logic
     /// </summary>
 	public class clsMainLogic
 	{
         /// <summary>
-        /// 
+        /// Returns all Items from the database
         /// </summary>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
@@ -33,8 +36,8 @@ namespace InvoiceSystem
                     var row = ds.Tables[0].Rows[i];
                     items.Add(new clsItem(
                         row["ItemCode"].ToString(),
-                        row["Flight_Number"].ToString(),
-                        row["Aircraft_Type"].ToString()
+                        row["ItemDesc"].ToString(),
+                        row["Cost"].ToString()
                     ));
                 }
                 return items;
@@ -45,6 +48,11 @@ namespace InvoiceSystem
                     MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
             }
         }
+        /// <summary>
+        /// Inserts a new Invoice into the database
+        /// </summary>
+        /// <param name="invoice"></param>
+        /// <exception cref="Exception"></exception>
         public static void SaveNewInvoice(clsInvoice invoice)
         {
             try
@@ -58,13 +66,18 @@ namespace InvoiceSystem
                     MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
             }
         }
-        public static void EditInvoice(clsInvoice oldInvoice, clsInvoice newInvoice)
+        /// <summary>
+        /// Changes the cost of an invoice
+        /// </summary>
+        /// <param name="invNum"></param>
+        /// <param name="newCost"></param>
+        /// <exception cref="Exception"></exception>
+        public static void EditInvoice(string invNum, string newCost)
         {
             try
             {
                 clsDataAccess db = new clsDataAccess();
-                // Logic to edit an existing invoice
-                // This would typically involve updating the invoice details in the database
+                db.ExecuteNonQuery(clsMainSQL.UpdateInvoice(invNum, newCost));
             }
             catch (Exception ex)
             {
@@ -72,14 +85,31 @@ namespace InvoiceSystem
                     MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
             }
         }
+        /// <summary>
+        /// Returns an invoice based on the invoice number
+        /// </summary>
+        /// <param name="invoiceNumber"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public static clsInvoice GetInvoice(string invoiceNumber)
         {
             try
             {
                 clsDataAccess db = new clsDataAccess();
-                // Logic to retrieve an invoice by its number
-                // This would typically involve querying the database for the invoice details
-                return new clsInvoice(); // Placeholder return, replace with actual retrieval logic
+                DataSet ds = new DataSet();
+                int rowCount = 0;
+                ds = db.ExecuteSQLStatement(invoiceNumber, ref rowCount);
+                clsInvoice retInvoice = null;
+                for (int i = 0; i < rowCount; i++)
+                {
+                    var row = ds.Tables[0].Rows[i];
+                    retInvoice = new clsInvoice(
+                        row["InvoiceNum"].ToString(),
+                        row["InvoiceDate"].ToString(),
+                        row["TotalCost"].ToString()
+                    );
+                }
+                return retInvoice;
             }
             catch (Exception ex)
             {
@@ -87,13 +117,17 @@ namespace InvoiceSystem
                     MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
             }
         }
+        /// <summary>
+        /// Deletes an invoice from the database
+        /// </summary>
+        /// <param name="invoice"></param>
+        /// <exception cref="Exception"></exception>
         public static void DeleteInvoice(clsInvoice invoice)
         {
             try
             {
                 clsDataAccess db = new clsDataAccess();
-                // Logic to delete an invoice
-                // This would typically involve removing the invoice details from the database
+                db.ExecuteScalarSQL(clsMainSQL.DeleteItems(invoice.sInvoiceNum.ToString()));
             }
             catch (Exception ex)
             {

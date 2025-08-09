@@ -1,5 +1,8 @@
 ﻿using System;
 using InvoiceSystem;
+using InvoiceSystem.Common;
+using InvoiceSystem.Search;
+using InvoiceSystem.Items;
 using System.Windows;
 using System.Reflection;
 using System.Collections.Generic;
@@ -22,16 +25,16 @@ namespace InvoiceSystem
     /// </summary>
     public partial class wndMain : Window
     {
-				wndSearch newSearch;
-				/// <summary>
-				/// Initializes the Main Window
-				/// </summary>
-				public wndMain()
+	    wndSearch newSearch;
+		/// <summary>
+		/// Initializes the Main Window
+		/// </summary>
+	    public wndMain()
         {
             InitializeComponent();
-						Application.Current.ShutdownMode = ShutdownMode.OnMainWindowClose;
-						newSearch = new wndSearch();
-				}
+			Application.Current.ShutdownMode = ShutdownMode.OnMainWindowClose;
+			newSearch = new wndSearch();
+	    }
         /// <summary>
         /// On-Click event for Search Button
         /// </summary>
@@ -51,7 +54,7 @@ namespace InvoiceSystem
         private void btnItems_Click(object sender, RoutedEventArgs e)
         {
             this.Hide();
-            wndItems newItems = new wndItems();
+            Items.wndItems newItems = new wndItems();
             newItems.ShowDialog();
             this.Show();
         }

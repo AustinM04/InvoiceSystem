@@ -30,11 +30,9 @@ namespace InvoiceSystem.Items
 			}
     		catch (Exception ex)
 			{
-   				//Throws Exception
-    				throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + 
-	 						"." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
-			}
-				
+                HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name,
+                        MethodInfo.GetCurrentMethod().Name, ex.Message);
+            }
 		}
    			
       	//bool HasItemsBeenChanged //Property

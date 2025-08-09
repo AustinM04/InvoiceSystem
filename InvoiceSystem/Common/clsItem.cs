@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace InvoiceSystem.Common
 {
-	internal class clsItem
+	public class clsItem
 	{
 		/// <summary>
 		/// Item Code
@@ -20,9 +21,22 @@ namespace InvoiceSystem.Common
 		/// Item Cost
 		/// </summary>
 		public string sCost { get; set; }
-		/// <summary>
+        /// <summary>
         /// Constructor
         /// </summary>
-        
-	}
+        public clsItem(string code, string desc, string cost)
+        {
+            try
+            {
+                sItemCode = code;
+                sDescription = desc;
+                sCost = cost;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name +
+                    "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
+        }
+    }
 }

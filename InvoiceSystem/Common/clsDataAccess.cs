@@ -3,8 +3,7 @@ using System.Data;
 using System.Data.OleDb;
 using System.IO;
 
-
-namespace InvoiceSystem
+namespace InvoiceSystem.Common
 {
     /// <summary>
     /// Class used to access the database.
@@ -21,7 +20,7 @@ namespace InvoiceSystem
         /// </summary>
         public clsDataAccess()
         {
-            sConnectionString = @"Provider=Microsoft.Jet.OLEDB.4.0;Data source= " + Directory.GetCurrentDirectory() + "\\Invoice.mdb";
+            sConnectionString = $"Provider=Microsoft.Jet.OLEDB.4.0;Data source= {Directory.GetCurrentDirectory()}\\Invoice.mdb";
         }
 
         /// <summary>

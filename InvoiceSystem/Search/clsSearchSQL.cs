@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace InvoiceSystem
+namespace InvoiceSystem.Search
 {
 	public class clsSearchSQL
 	{

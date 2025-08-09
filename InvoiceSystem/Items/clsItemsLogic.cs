@@ -1,12 +1,15 @@
 ﻿using InvoiceSystem;
 using System;
 using System.Windows;
+using InvoiceSystem.Common;
+using InvoiceSystem.Search;
+using InvoiceSystem.Items;
 using System.Reflection;
 using System.Windows.Controls;
 using System.Collections.Generic;
 using System.Data;
 
-namespace InvoiceSystem
+namespace InvoiceSystem.Items
 {
 	public class clsItemsLogic
 	{
