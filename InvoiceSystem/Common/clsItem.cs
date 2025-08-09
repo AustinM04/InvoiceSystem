@@ -23,36 +23,6 @@ namespace InvoiceSystem.Common
 		/// <summary>
         /// Constructor
         /// </summary>
-        public clsItem(string sitemDesc, string sitemCode, string sitemCost) 
-        {
-            try
-            {
-                sDescription = sitemDesc;
-                sItemCode = sitemCode;
-                sCost = sitemCost;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + 
-                    "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
-            }
-        }
-		///<summary>
-		///Override ToString Method
-		///</summary>
-		public override string ToString()
-        {
-            try
-            {
-                return sDescription;
-            }
-            catch (Exception ex)
-            {
-                //Just throw the exception
-                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
-                                    MethodInfo.GetCurrentMethod().Name + " -> " + 
-                                    ex.Message);
-            }
-        }
+        
 	}
 }
