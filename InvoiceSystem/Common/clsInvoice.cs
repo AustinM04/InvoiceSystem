@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Reflection;
 
-namespace InvoiceSystem.Common
+namespace InvoiceSystem
 {
-	internal class clsInvoice
+	public class clsInvoice
 	{
 		/// <summary>
 		/// Invoice Number
@@ -20,9 +16,20 @@ namespace InvoiceSystem.Common
 		/// Total cost
 		/// </summary>
 		public string sTotalCost { get; set; }
-		/// <summary>
-		/// List of items in the invoice
-		/// </summary>
-		public List<clsItem> Items { get; set; }
-	}
+
+        public clsInvoice(string num, string date, string cost)
+        {
+            try
+            {
+                sInvoiceNum = num;
+                sInvoiceDate = date;
+                sTotalCost = cost;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name +
+                    "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
+        }
+    }
 }

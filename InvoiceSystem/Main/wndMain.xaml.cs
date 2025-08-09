@@ -1,7 +1,11 @@
-﻿using InvoiceSystem.Items;
-using InvoiceSystem.Search;
-using System.Text;
+﻿using System;
+using InvoiceSystem;
 using System.Windows;
+using System.Reflection;
+using System.Collections.Generic;
+using System.Data;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
