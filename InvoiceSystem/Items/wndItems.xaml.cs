@@ -12,6 +12,7 @@ namespace InvoiceSystem.Items
 	{
 		//Create an instance for Items SQL Class
 		private clsItemsLogic itemsLogic;
+  		//Create a List to hold item data
 		private List<clsItem> clsItems;
 		clsItem selectedItem;
 		private bool bHasItemsBeenChanged = false; //Set to true when an item has been added/edited/deleted. Used by main window to see if list needs to be refeshed
@@ -21,13 +22,13 @@ namespace InvoiceSystem.Items
 		public wndItems()
 		{
 			try
-      {
-	   		InitializeComponent();
+      		{
+	   			InitializeComponent();
 				itemsLogic = new clsItemsLogic();
 				resetDataGrid();
 				resetLabels();
 			}
-    	catch (Exception ex)
+    		catch (Exception ex)
 			{
    				//Throws Exception
     				throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + 
@@ -36,11 +37,11 @@ namespace InvoiceSystem.Items
 				
 		}
    			
-      		//bool HasItemsBeenChanged //Property
-      		public bool HasItemsBeenChanged
-      		{
-      			get { return bHasItemsBeenChanged; }
-      		}
+      	//bool HasItemsBeenChanged //Property
+      	public bool HasItemsBeenChanged
+      	{
+      		get { return bHasItemsBeenChanged; }
+      	}
 
 		/// <summary>
 		/// Method to reset the data grid with items from the database
@@ -50,6 +51,7 @@ namespace InvoiceSystem.Items
 		{
 			try
 			{
+   				//DataGrid retreves item data
 				dgItems.ItemsSource = itemsLogic.GetItems();
 			}
 			catch (Exception ex)
@@ -66,6 +68,7 @@ namespace InvoiceSystem.Items
 		{
 			try
 			{
+   				//All Labels content is returned to zero
 				lblCode.Content = "";
 				lblDescription.Content = "";
 				lblCost.Content = "";
@@ -114,6 +117,7 @@ namespace InvoiceSystem.Items
 			}
 			catch (Exception ex)
 			{
+   				//Calls HandleError Method to handle Error
 				HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name,
 					MethodInfo.GetCurrentMethod().Name, ex.Message);
 			}
@@ -152,65 +156,72 @@ namespace InvoiceSystem.Items
 				//}
 				#endregion
 
-				/// <summary>
-				/// Handle the error.
-				/// </summary>
-				/// <param name="sClass">The class in which the error occurred in.</param>
-				/// <param name="sMethod">The method in which the error occurred in.</param>
-				private void HandleError(string sClass, string sMethod, string sMessage)
-				{
-						try
-						{
-								MessageBox.Show(sClass + "." + sMethod + " -> " + sMessage);
-						}
-						catch (Exception ex)
-						{
-								System.IO.File.AppendAllText("C:\\Error.txt", Environment.NewLine +
-																						 "HandleError Exception: " + ex.Message);
-						}
-				}
+		/// <summary>
+		/// Handle the error.
+		/// </summary>
+		/// <param name="sClass">The class in which the error occurred in.</param>
+		/// <param name="sMethod">The method in which the error occurred in.</param>
+		private void HandleError(string sClass, string sMethod, string sMessage)
+		{
+			try
+			{
+   				//Displays Messagebox
+				MessageBox.Show(sClass + "." + sMethod + " -> " + sMessage);
+			}
+			catch (Exception ex)
+			{
+				System.IO.File.AppendAllText("C:\\Error.txt", Environment.NewLine + 
+					"HandleError Exception: " + ex.Message);
+			}
+		}
 
-				/// <summary>
-				/// Method to make sure that the data grid and labels are reset when the window is loaded
-				/// </summary>
-				/// <param name="sender"></param>
-				/// <param name="e"></param>
-				private void Window_Loaded(object sender, RoutedEventArgs e)
-				{
-						try
-						{
-								resetDataGrid();
-								resetLabels();
-						}
-						catch (Exception ex)
-						{
-								HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name,
-														MethodInfo.GetCurrentMethod().Name, ex.Message);
-						}
-				}
+		/// <summary>
+		/// Method to make sure that the data grid and labels are reset when the window is loaded
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void Window_Loaded(object sender, RoutedEventArgs e)
+		{
+			try
+			{
+   				//Resets the DataGrid
+				resetDataGrid();
+				//Resets the Labels
+				resetLabels();
+			}
+			catch (Exception ex)
+			{
+   				//Calls HandelError method to handle error
+				HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name,
+					MethodInfo.GetCurrentMethod().Name, ex.Message);
+			}
+		}
 
-				/// <summary>
-				/// Method to handle the selection changed event of the data grid and update the labels with selected item details
-				/// </summary>
-				/// <param name="sender"></param>
-				/// <param name="e"></param>
-				private void dgItems_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+		/// <summary>
+		/// Method to handle the selection changed event of the data grid and update the labels with selected item details
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void dgItems_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+		{
+			try
+			{
+   				//If items in data grid is not null
+				if (dgItems.SelectedItem != null)
 				{
-						try
-						{
-								if (dgItems.SelectedItem != null)
-								{
-										selectedItem = (clsItem)dgItems.SelectedItem;
-										lblCode.Content = selectedItem.sItemCode;
-										lblDescription.Content = selectedItem.sDescription;
-										lblCost.Content = selectedItem.sCost;
-								}
-						}
-						catch (Exception ex)
-						{
-								HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name,
-														MethodInfo.GetCurrentMethod().Name, ex.Message);
-						}
+					//All Selected content is displayed
+					selectedItem = (clsItem)dgItems.SelectedItem;
+					lblCode.Content = selectedItem.sItemCode;
+					lblDescription.Content = selectedItem.sDescription;
+					lblCost.Content = selectedItem.sCost;
 				}
+			}
+			catch (Exception ex)
+			{
+   				//Calls HandleError Method to handle error
+				HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name,
+					MethodInfo.GetCurrentMethod().Name, ex.Message);
+			}
+		}
 	}
 }
