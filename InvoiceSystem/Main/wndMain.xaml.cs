@@ -24,14 +24,16 @@ namespace InvoiceSystem
     public partial class wndMain : Window
     {
         /// <summary>
-        /// Initializing the search window
+        /// Id of the selected invoice ID from the search window
         /// </summary>
-	    wndSearch newSearch = new wndSearch();
+	      private string sSelectedInvoiceID = "0";
+				/// <summary>
+				/// Declaring a new instance of the main logic class to interact
 
-		/// <summary>
-		/// Initializes the Main Window
-		/// </summary>
-	    public wndMain()
+				/// <summary>
+				/// Initializes the Main Window
+				/// </summary>
+				public wndMain()
         {
             try
             {
@@ -54,9 +56,11 @@ namespace InvoiceSystem
         /// <param name="e"></param>
         private void btnSearch_Click(object sender, RoutedEventArgs e)
         {
+						wndSearch newSearch = new wndSearch();
             this.Hide();
-            newSearch.ShowDialog();
+						newSearch.ShowDialog();
             this.Show();
+						sSelectedInvoiceID = newSearch.sSelectedInvoiceID;
         }
 
         /// <summary>
