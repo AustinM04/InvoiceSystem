@@ -1,4 +1,9 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace InvoiceSystem.Common
 {
@@ -19,10 +24,6 @@ namespace InvoiceSystem.Common
         /// <summary>
         /// Constructor for clsInvoice
         /// </summary>
-        /// <param name="num"></param>
-        /// <param name="date"></param>
-        /// <param name="cost"></param>
-        /// <exception cref="Exception"></exception>
         public clsInvoice(string num, string date, string cost)
         {
             try

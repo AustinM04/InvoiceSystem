@@ -1,6 +1,11 @@
 ﻿using InvoiceSystem.Common;
-using System.Reflection;
+using System;
+using InvoiceSystem;
 using System.Windows;
+using System.Reflection;
+using System.Collections.Generic;
+using System.Data;
+using System.Text;
 
 
 namespace InvoiceSystem.Items
@@ -140,19 +145,6 @@ namespace InvoiceSystem.Items
 						MethodInfo.GetCurrentMethod().Name, ex.Message);
 			}
 		}
-
-
-				#region try-catch block copy paste
-				//try
-				//{
-
-				//}
-				//catch (Exception ex)
-				//{
-				//		HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name,
-				//								MethodInfo.GetCurrentMethod().Name, ex.Message);
-				//}
-				#endregion
 
 		/// <summary>
 		/// Handle the error.

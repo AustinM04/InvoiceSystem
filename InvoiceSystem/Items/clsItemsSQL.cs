@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,11 +12,19 @@ namespace InvoiceSystem.Items
 		/// <summary>
 		/// This SQL gets all item details
 		/// </summary>
-		/// <returns>All data for the given invoice.</returns>
+		/// <returns>SQL Select Statement as string</returns>
 		public static string GetAllItemDetails()
 		{
-			return "SELECT ItemCode, ItemDesc, Cost from ItemDesc";
-		}
+            try
+            {
+                return "SELECT ItemCode, ItemDesc, Cost from ItemDesc";
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
+                    MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
+        }
 
 		/// <summary>
 		/// This SQL gets all the invoices that contain a specific item code.
@@ -24,16 +33,32 @@ namespace InvoiceSystem.Items
 		/// <returns>All invoices for the given item code.</returns>
 		public static string GetItemWithCode(string itemCode)
 		{
-			return $"SELECT distinct(InvoiceNum) from LineItems where ItemCode = '{itemCode}'";
-		}
+            try
+            {
+                return $"SELECT distinct(InvoiceNum) from LineItems where ItemCode = '{itemCode}'";
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
+                    MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
+        }
 
 		/// <summary>
 		/// SQL to update existing item
 		/// </summary>
 		public static string UpdateItem(string itemDesc, string itemCost, string itemCode)
 		{
-			return $"Update ItemDesc Set ItemDesc = '{itemDesc}', Cost = {itemCost} where ItemCode = '{itemCode}'";
-		}
+            try
+            {
+                return $"Update ItemDesc Set ItemDesc = '{itemDesc}', Cost = {itemCost} where ItemCode = '{itemCode}'";
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
+                    MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
+        }
 
 		/// <summary>
 		/// This SQL inserts a new item into the ItemDesc table
@@ -44,8 +69,16 @@ namespace InvoiceSystem.Items
 		/// <returns></returns>
 		public static string InsertItem(string itemCode, string itemDesc, string itemPrice)
 		{
-				return $"Insert into ItemDesc(ItemCode, ItemDesc, Cost) Values('{itemCode}', '{itemDesc}', {itemPrice});";
-		}
+            try
+            {
+                return $"Insert into ItemDesc(ItemCode, ItemDesc, Cost) Values('{itemCode}', '{itemDesc}', {itemPrice});";
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
+                    MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
+        }
 
 		/// <summary>
 		/// This SQL deletes an item from the ItemDesc table based on the item code
@@ -54,7 +87,15 @@ namespace InvoiceSystem.Items
 		/// <returns></returns>
 		public static string DeleteItem(string itemCode)
 		{
-				return $"Delete from ItemDesc Where ItemCode = '{itemCode}';";
-		}
+            try
+            {
+                return $"Delete from ItemDesc Where ItemCode = '{itemCode}'";
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
+                    MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
+        }
 	}
 }

@@ -31,7 +31,7 @@
             <Button x:Name="btnEditInvoice" Content="Edit Invoice" FontSize="16" Margin="0,20,0,0" Click="btnEditInvoice_Click"/>
             <Button x:Name="btnSaveInvoice" Content="Save Invoice" FontSize="16" Margin="0,20,0,0" Click="btnSaveInvoice_Click"/>
         </StackPanel>
-        <Label x:Name="lblItemsOnInvoice" Content="Items on Invoice:" Grid.Column="1" Margin="21,30,344,367" FontSize="16"/>
-        <DataGrid x:Name="gItems" d:ItemsSource="{d:SampleData ItemCount=6}" Grid.Column="1" FontSize="16" Margin="21,100,21,99"/>
+        <Label x:Name="lblItemsOnInvoice" Content="Select an Invoice:" Grid.Column="1" Margin="21,58,344,339" FontSize="16"/>
+        <DataGrid x:Name="gItems" d:ItemsSource="{d:SampleData ItemCount=6}" Grid.Column="1" FontSize="16" Margin="21,100,21,99" SelectionChanged="gItems_SelectionChanged"/>
     </Grid>
 </Window>

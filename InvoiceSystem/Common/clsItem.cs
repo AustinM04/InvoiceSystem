@@ -38,5 +38,9 @@ namespace InvoiceSystem.Common
                     "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
             }
         }
+        public override string ToString()
+        {
+            return sDescription;
+        }
     }
 }
