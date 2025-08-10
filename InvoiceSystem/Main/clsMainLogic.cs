@@ -135,5 +135,39 @@ namespace InvoiceSystem.Main
                     MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
             }
         }
+
+        /// <summary>
+        /// Retrieves all items for a specific invoice
+        /// </summary>
+        /// <param name="invoiceID">Invoice ID</param>
+        /// <returns>List of items</returns>
+        /// <exception cref="Exception"></exception>
+        public static List<clsItem> GetInvoiceItems(string invoiceID)
+        {
+            try
+            {
+                var items = new List<clsItem>();
+                int rowCount = 0;
+                var ds = new DataSet();
+                clsDataAccess db = new clsDataAccess();
+                ds = db.ExecuteSQLStatement(clsMainSQL.ReturnLineItems(invoiceID), ref rowCount);
+
+                for (int i = 0; i < rowCount; i++)
+                {
+                    var row = ds.Tables[0].Rows[i];
+                    items.Add(new clsItem(
+                        row["ItemCode"].ToString(),
+                        row["ItemDesc"].ToString(),
+                        row["Cost"].ToString()
+                    ));
+                }
+                return items;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
+                    MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
+        }
     }
 }

@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 
+/// Austin Moore
+
 namespace InvoiceSystem.Search
 {
 		/// <summary>

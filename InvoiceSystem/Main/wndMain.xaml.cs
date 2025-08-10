@@ -13,8 +13,6 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 
 /// Marley Palmer
-/// Austin Moore
-/// Alex Ng
 
 namespace InvoiceSystem
 {
@@ -27,13 +25,11 @@ namespace InvoiceSystem
         /// Id of the selected invoice ID from the search window
         /// </summary>
 	      private string sSelectedInvoiceID = "0";
-				/// <summary>
-				/// Declaring a new instance of the main logic class to interact
 
-				/// <summary>
-				/// Initializes the Main Window
-				/// </summary>
-				public wndMain()
+		/// <summary>
+		/// Initializes the Main Window
+		/// </summary>
+		public wndMain()
         {
             try
             {
@@ -56,11 +52,19 @@ namespace InvoiceSystem
         /// <param name="e"></param>
         private void btnSearch_Click(object sender, RoutedEventArgs e)
         {
-						wndSearch newSearch = new wndSearch();
-            this.Hide();
-						newSearch.ShowDialog();
-            this.Show();
-						sSelectedInvoiceID = newSearch.sSelectedInvoiceID;
+            try
+            {
+                wndSearch newSearch = new wndSearch();
+                this.Hide();
+                newSearch.ShowDialog();
+                this.Show();
+                sSelectedInvoiceID = newSearch.sSelectedInvoiceID;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
+                    MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
         }
 
         /// <summary>
@@ -70,10 +74,18 @@ namespace InvoiceSystem
         /// <param name="e"></param>
         private void btnItems_Click(object sender, RoutedEventArgs e)
         {
-            this.Hide();
-            Items.wndItems newItems = new wndItems();
-            newItems.ShowDialog();
-            this.Show();
+            try
+            {
+                this.Hide();
+                Items.wndItems newItems = new wndItems();
+                newItems.ShowDialog();
+                this.Show();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
+                    MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
         }
 
         /// <summary>
@@ -103,7 +115,9 @@ namespace InvoiceSystem
         {
             try
             {
+                clsInvoice newInvoice = new clsInvoice("TBD", lblInvoiceDate.Content.ToString(), lblTotalCost.Content.ToString().Replace("Total: $", string.Empty));
 
+                clsMainLogic.SaveNewInvoice(newInvoice);
             }
             catch (Exception ex)
             {
@@ -122,7 +136,6 @@ namespace InvoiceSystem
             try
             {
                 clsItem selectedItem = (clsItem)cboItems.SelectedItem;
-                
             }
             catch (Exception ex)
             {
@@ -140,7 +153,6 @@ namespace InvoiceSystem
         {
             try
             {
-
             }
             catch (Exception ex)
             {
@@ -169,7 +181,15 @@ namespace InvoiceSystem
 
         private void gItems_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            try
+            {
+                clsMainLogic.GetInvoiceItems(sSelectedInvoiceID);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
+                    MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
         }
         // After search window is closed, check property SelectedInvoiceID in the search window to see if an invoice is selected. If so load the invoice
         // After Items window is closed, check property HasBeenChanged in the Items window to see if any items were updated. If so re-load items in combo box
