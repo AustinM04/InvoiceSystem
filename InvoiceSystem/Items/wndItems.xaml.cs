@@ -1,158 +1,243 @@
-﻿using System;
+using InvoiceSystem;
+using InvoiceSystem.Common;
+using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Collections.ObjectModel;
+using System.Data;
 using System.Reflection;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+
 
 namespace InvoiceSystem.Items
 {
-	/// <summary>
-	/// Interaction logic for wndItems.xaml
-	/// </summary>
-	public partial class wndItems : Window
-	{
-        //Create an instance for Items SQL Class
-        private Items.clsItemsSQL ItemsSql;
-        //a list to hold Items data
+    /// <summary>
+    /// Interaction logic for wndItems.xaml
+    /// </summary>
+    public partial class wndItems : Window
+    {
+        /// <summary>
+        /// Instance of the logic for this form
+        /// </summary>
+        private clsItemsLogic controller = new clsItemsLogic();
+        /// <summary>
+        /// Contains the currently selected item.
+        /// </summary>
+        private clsItemsLogic.Item currentItem;
+
+        private wndMain ParentWindow;
 
         /// <summary>
-        /// Constructor for Window
+        /// Default Constructor
         /// </summary>
-        /// <exception cref="Exception"></exception>
-        public wndItems()
-	    {
+        public wndItems(wndMain window)
+        {
+            ParentWindow = window;
+            InitializeComponent();
+            updateAllItems();
+        }
+
+        /// <summary>
+        /// requery all items and redraw the ui.
+        /// </summary>
+        private void updateAllItems()
+        {
             try
             {
-                ItemsSql = new Items.clsItemsSQL();
+                lbAllItems.ItemsSource = null;
+                ObservableCollection<clsItemsLogic.Item> itemCollection = new ObservableCollection<clsItemsLogic.Item>();
+                foreach (var item in controller.getAllItems())
+                {
+                    itemCollection.Add(item);
+                }
+                lbAllItems.ItemsSource = itemCollection;
+            }
+            catch (Exception ex)
+            {
+                HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name,
+                    MethodInfo.GetCurrentMethod().Name, ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Constructor that accepts an item code and automatically loads the item.
+        /// </summary>
+        /// <param name="invoiceNumber"></param>
+        public wndItems(string itemcode)
+        {
+            try
+            {
                 InitializeComponent();
-                updateItem();
-                dealWithDataGrid();
+                lbAllItems.ItemsSource = controller.getAllItems();
+                // get item from db and update selected.
             }
             catch (Exception ex)
             {
-                //Throws Exception
-                throw new Exception(System.Reflection.MethodInfo.GetCurrentMethod().DeclaringType.Name + 
-                    "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+                HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name,
+                    MethodInfo.GetCurrentMethod().Name, ex.Message);
             }
         }
+
         /// <summary>
-        /// Data Input for DataGrid
-        /// </summary>
-        /// <exception cref="Exception"></exception>
-        public void dealWithDataGrid()
-        {
-            try
-            {
-                //Items Placed in Data Grid
-            }
-            catch (Exception ex)
-            {
-                //Just throw the exception
-                throw new Exception(System.Reflection.MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
-                                    MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
-            }
-        }
-        /// <summary>
-        /// When the Add Button is Pressed
+        /// Event handler for when the user selects an item in the list
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void AddButton_Click(object sender, RoutedEventArgs e)
+        private void LbAllItems_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
             {
-                //Items are added to list
+                if (lbAllItems.SelectedIndex > -1)
+                {
+                    clsItemsLogic.Item clickedItem = (clsItemsLogic.Item)e.AddedItems[0];
+                    setSelectedItem(clickedItem);
+                }
             }
             catch (Exception ex)
             {
-                //This is the top level method so we want to handle the exception
                 HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name,
-                            MethodInfo.GetCurrentMethod().Name, ex.Message);
+                    MethodInfo.GetCurrentMethod().Name, ex.Message);
             }
         }
+
         /// <summary>
-        /// When the Edit Button is pressed
+        /// View logic for when an item is selected.
+        /// </summary>
+        /// <param name="item">Item Struct containing the current item</param>
+        private void setSelectedItem(clsItemsLogic.Item item)
+        {
+            try
+            {
+                currentItem = item;
+                lblItemCodeVal.Content = item.ItemCode;
+                tbDescVal.Text = item.ItemDesc;
+                tbCostVal.Text = item.Cost.ToString();
+                btnSave.IsEnabled = true;
+            }
+            catch (Exception ex)
+            {
+                HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name,
+                    MethodInfo.GetCurrentMethod().Name, ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// event handler for save button
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void EditButton_Click(object sender, RoutedEventArgs e)
+        private void BtnSave_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                //This will edit an item
-            }
-            catch (Exception ex) 
-            {
-                //This is the top level method so we want to handle the exception
-                HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name,
-                            MethodInfo.GetCurrentMethod().Name, ex.Message);
-            }
-        }
-        /// <summary>
-        /// Updates the list by using items SQL class
-        /// </summary>
-        public void updateItem()
-        {
-            try
-            {
-                //Updates Item
-                //lstData = ItemsSql.GetItemDesc();
+                var item = currentItem;
+                item.Cost = tbCostVal.Text.Length > 0 ? decimal.Parse(tbCostVal.Text) : 0;
+                item.ItemDesc = tbDescVal.Text;
+                controller.upsert(item);
+                updateAllItems();
             }
             catch (Exception ex)
             {
-                //Just throw the exception
-                throw new Exception(System.Reflection.MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
-                                    MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+                HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name,
+                    MethodInfo.GetCurrentMethod().Name, ex.Message);
             }
         }
+
         /// <summary>
-        /// Handle the error.
+        /// new item button event handler
         /// </summary>
-        /// <param name="sClass">The class in which the error occurred in.</param>
-        /// <param name="sMethod">The method in which the error occurred in.</param>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BtnNewItem_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var item = controller.newItem();
+                setSelectedItem(item);
+            }
+            catch (Exception ex)
+            {
+                HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name,
+                    MethodInfo.GetCurrentMethod().Name, ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Event handler for delete item.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BtnDeleteItem_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                controller.deleteItem(currentItem);
+                updateAllItems();
+                clearSelectedItem();
+            }
+            catch (Exception ex)
+            {
+                HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name,
+                    MethodInfo.GetCurrentMethod().Name, ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// clears the selected Item 
+        /// </summary>
+        private void clearSelectedItem()
+        {
+            try
+            {
+                var empty = new clsItemsLogic.Item();
+                lbAllItems.SelectedIndex = -1;
+                lblItemCodeVal.Content = "";
+                tbCostVal.Text = "";
+                tbDescVal.Text = "";
+                setSelectedItem(empty);
+            }
+            catch (Exception ex)
+            {
+                HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name,
+                    MethodInfo.GetCurrentMethod().Name, ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// handler for window closing (calls parent refresh)
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            try
+            {
+                this.close();
+            }
+            catch (Exception ex)
+            {
+                HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name,
+                    MethodInfo.GetCurrentMethod().Name, ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Error Handler
+        /// </summary>
+        /// <param name="sClass"></param>
+        /// <param name="sMethod"></param>
+        /// <param name="sMessage"></param>
         private void HandleError(string sClass, string sMethod, string sMessage)
         {
             try
             {
-                //Would write to a file or database here.
                 MessageBox.Show(sClass + "." + sMethod + " -> " + sMessage);
             }
-            catch (Exception ex)
+            catch (System.Exception ex)
             {
-                System.IO.File.AppendAllText("C:\\Error.txt", Environment.NewLine +
-                                             "HandleError Exception: " + ex.Message);
+                System.IO.File.AppendAllText(@"C:\Error.txt", Environment.NewLine + "HandleError Exception: " + ex.Message);
             }
         }
-        /// <summary>
-        /// Delete Button is Pressed
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void DeleteButton(object sender, RoutedEventArgs e)
-        {
-            try 
-            { 
-                //Item is deleted
-            } 
-            catch (Exception ex) 
-            {
-                //Exception is issued to HandleError Method
-                HandleError(MethodInfo.GetCurrentMethod().DeclaringType.Name,
-                            MethodInfo.GetCurrentMethod().Name, ex.Message);
-            }
-        }
-        //bool bHasItemsBeenChanged //Set to true when an item has been added/edited/deleted. Used by main window to see if list needs to be refeshed
-        //bool HasItemsBeenChanged //Property
-
     }
 }
