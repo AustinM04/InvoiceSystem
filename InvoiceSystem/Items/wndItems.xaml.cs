@@ -213,7 +213,7 @@ namespace InvoiceSystem.Items
         {
             try
             {
-                this.close();
+                clearSelectedItem();
             }
             catch (Exception ex)
             {
