@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -8,78 +7,95 @@ using System.Threading.Tasks;
 
 namespace InvoiceSystem.Items
 {
-    public class clsItemsSQL
-	{
+    internal class clsItemsSQL
+    {
         /// <summary>
-        /// Holds an SQL statement
+        /// This SQL gets all item details
         /// </summary>
-        public string sSQL;
-
-        /// <summary>
-        /// Creates an instance of the DataAccess class
-        /// </summary>
-        //private clsDataAccess db;
-
-        /// <summary>
-        /// Create a list to hold the list items
-        /// </summary>
-        //public List<clsItems> lstItems { get; set; }
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        public clsItemsSQL()
+        /// <returns>SQL Select Statement as string</returns>
+        public static string GetAllItemDetails()
         {
             try
             {
-                //lstItems = new List<clsItems>();
+                return "SELECT ItemCode, ItemDesc, Cost from ItemDesc";
             }
             catch (Exception ex)
             {
-                //Throws Exception
-                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + 
-                    "." + MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
+                    MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
             }
         }
+
         /// <summary>
-        /// Gets the Item Description
+        /// This SQL gets all the invoices that contain a specific item code.
         /// </summary>
+        /// <param name="itemCode">The item code to retrieve all invoices for.</param>
+        /// <returns>All invoices for the given item code.</returns>
+        public static string GetItemWithCode(string itemCode)
+        {
+            try
+            {
+                return $"SELECT distinct(InvoiceNum) from LineItems where ItemCode = '{itemCode}'";
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
+                    MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// SQL to update existing item
+        /// </summary>
+        public static string UpdateItem(string itemDesc, string itemCost, string itemCode)
+        {
+            try
+            {
+                return $"Update ItemDesc Set ItemDesc = '{itemDesc}', Cost = {itemCost} where ItemCode = '{itemCode}'";
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
+                    MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// This SQL inserts a new item into the ItemDesc table
+        /// </summary>
+        /// <param name="itemCode">Item code for the new item</param>
+        /// <param name="itemDesc">Description for the new item</param>
+        /// <param name="itemPrice">Price for the new item</param>
         /// <returns></returns>
-        //public List<clsItems> GetItemDesc()
-        //{
-            //try
-            //{
-                //db = new clsDataAccess();
+        public static string InsertItem(string itemCode, string itemDesc, string itemPrice)
+        {
+            try
+            {
+                return $"Insert into ItemDesc(ItemCode, ItemDesc, Cost) Values('{itemCode}', '{itemDesc}', {itemPrice});";
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
+                    MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
+        }
 
-                //int iRet = 0;   //Number of return values
-                //DataSet ds = new DataSet(); //Holds the return values
-
-                //ds.AcceptChanges();
-
-                //clsItems Items;
-                //sSQL = "SELECT ItemCode, ItemDesc, Cost FROM ItemDesc ";
-
-                //Extract the passengers and put them into the DataSet
-                //ds = db.ExecuteSQLStatement(sSQL, ref iRet);
-
-                //lstItems = new List<clsItems>();
-                //for (int i = 0; i < iRet; i++)
-                //{
-                //    Items = new clsItems();
-                //    Items.ItemCode = ds.Tables[0].Rows[i]["ItemCode"].ToString();
-                //    Items.ItemDesc = ds.Tables[0].Rows[i]["ItemDesc"].ToString();
-                //    Items.ItemCost = ds.Tables[0].Rows[i]["Cost"].ToString();
-
-                //    lstItems.Add(Items);
-                //}
-
-                //return lstItems;
-            //}
-            //catch (Exception ex)
-            //{
-                //Just throw the exception
-                //throw new Exception(System.Reflection.MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
-                //                    MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
-            //}
-        //}
+        /// <summary>
+        /// This SQL deletes an item from the ItemDesc table based on the item code
+        /// </summary>
+        /// <param name="itemCode"></param>
+        /// <returns></returns>
+        public static string DeleteItem(string itemCode)
+        {
+            try
+            {
+                return $"Delete from ItemDesc Where ItemCode = '{itemCode}'";
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(MethodInfo.GetCurrentMethod().DeclaringType.Name + "." +
+                    MethodInfo.GetCurrentMethod().Name + " -> " + ex.Message);
+            }
+        }
     }
 }
